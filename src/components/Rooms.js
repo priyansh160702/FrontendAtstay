@@ -323,9 +323,10 @@ function Rooms() {
             {/* Content of the first div */}
             <MyApp />
           </div>
-          <h2 className="ps-4 colorss">Traditional Huts</h2>
         </div>
 
+        <h2 className="ps-4 colorss">Traditional Huts</h2>
+        
         {mm4.map((nextm) => {
           return (
             <>
@@ -342,11 +343,9 @@ function Rooms() {
           <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
         </Carousel.Caption>
       </Carousel.Item>
-      
                 )
               })
             }
-        
       {/* <Carousel.Item>
       <img src={carousel2}  style={{ width:'100%' ,  height:'600px'}} />        <Carousel.Caption>
           <h3>Second slide label</h3>
