@@ -222,6 +222,7 @@ button {
     .col-2-3 {
         width: 100%;
     }
+
     /* Clear padding for columns in smaller screens */
     [class*='col-'] {
         padding-right: 0;
@@ -240,17 +241,4 @@ button {
 /* Target input placeholders for a specific input field with a class or ID */
 input::placeholder {
     color: grey; /* Change to your desired color */
-}
-
-
-@media only screen and (max-width: 767px) {
-    .form-group{
-        width: 100%;
-    }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 1023px)  {
-    .form-group{
-        width: 100%;
-    }
 }
