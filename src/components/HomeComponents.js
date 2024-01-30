@@ -18,15 +18,15 @@ import trending from "../images/trending.jpg";
 import mansion from "../images/Mansion.jpg";
 import tea from "../images/tea.jpg";
 import less from "../images/less.png";
-import Beach from "../images/Beach.png";
-import CityView from "../images/CityView.png";
-import Heritage from "../images/Heritage.png";
-import TreeHouse from "../images/TreeHouse.png";
-import SunView from "../images/SunView.png";
-import NationalPark from "../images/NationalPark.png";
-import BedBreakFast from "../images/Bed&Breakfast.png";
-import Tropical from "../images/Tropical.png";
-import Luxe from "../images/Luxe.png";
+import Beach from "../images/Beach.png"
+import CityView from "../images/CityView.png"
+import Heritage from "../images/Heritage.png"
+import TreeHouse from "../images/TreeHouse.png"
+import SunView from "../images/SunView.png"
+import NationalPark from "../images/NationalPark.png"
+import BedBreakFast from "../images/Bed&Breakfast.png"
+import Tropical from "../images/Tropical.png"
+import Luxe from "../images/Luxe.png"
 // import './HomeComponents.css';
 import Footer from "./Footer";
 import "./HomeComponents.css";
