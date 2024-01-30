@@ -208,10 +208,10 @@ function Rooms() {
   };
 
   const showbox = () => {
-    if (checkin === checkout) {
-      alert("Please select valid and different check-in and check-out dates.");
-      return 1;
-    }
+    // if (checkin === checkout) {
+    //   alert("Please select valid and different check-in and check-out dates.");
+    //   return 1;
+    // }
 
     const box = document.querySelector(".hide");
     const classss = document.querySelector(".nonflex");
@@ -550,12 +550,12 @@ function Rooms() {
                   )}
                 </div>
 
-                <div className="bg-white hide" style={{ width: "350px" }}>
+                <div className="bg-white boxmodal hide" style={{ width: "350px" }}>
                   <div
-                    className=" my-5"
+                    className=" my-5 "
                     style={{ height: "470px", backgroundColor: "#66cccc" }}
                   >
-                    <i
+                    {/* <i
                       class="fa-solid fa-xmark"
                       onClick={closebox}
                       style={{
@@ -563,7 +563,7 @@ function Rooms() {
                         display: "none",
                         cursor: "pointer",
                       }}
-                    ></i>
+                    ></i> */}
 
                     {/* {mm2.map((rm, rmid) => (
   <div key={rmid}>
@@ -827,7 +827,7 @@ function Rooms() {
       </div>
 
       <Footer></Footer>
-
+{/* 
       <div
         className="whitebox w-100 bg-white d-none container1"
         style={{
@@ -867,7 +867,7 @@ function Rooms() {
             Book Now
           </button>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
