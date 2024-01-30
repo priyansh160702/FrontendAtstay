@@ -9,16 +9,20 @@
     cursor:pointer;
 }
 
+
+
+
 .product-container div{
     display:flex;
     flex-direction: column;
     align-items: center;
 }
 
-
-.product-container div p{
-    font-family: cursive !important;
-    font-size:14px;
+@media(min-width: 1000px){
+    .product-container div p{
+        font-family: cursive !important;
+        font-size:14px;
+    }
 }
 
 
@@ -31,12 +35,14 @@
 
 .product-container{
     /* padding: 0 10px; */
-    padding-left:50px;
+    padding-left:476px;
     margin-top:6px;
     display:flex;
     overflow-x:hidden;
     scroll-behavior:smooth;
     justify-content: space-around;
+    gap:20px;
+    width:850px;
 }
 
 .pre-btn , .next-btn{
@@ -92,6 +98,7 @@
         width:800px !important;
         margin-left:50px;
     }
+
 }
 
 
