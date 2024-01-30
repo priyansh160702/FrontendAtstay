@@ -184,8 +184,11 @@ function Rooms() {
     }
   };
   const inc2 = () => {
-    if (numss >= num) {
+    if (numss < num) {
       setnumss(parseInt(numss) + 1);
+    }
+    else{
+      alert("No More Children Allowed")
     }
   };
   const dec = () => {
