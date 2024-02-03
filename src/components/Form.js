@@ -205,11 +205,7 @@ const navigate = useNavigate()
         <label for="country"></label>
       </div>
   </div>
-
-  <div>
   <button type="submit" value="Submit" class="col-1-4" >Submit</button>
-  <button type="submit" value="Submit" class="col-1-4" >Submit</button>
-  </div>
 
 </form>
 <Footer></Footer>
