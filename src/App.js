@@ -1,62 +1,56 @@
-import React from "react";
-import Navbar from "./components/Navbar";
-import Home from './components/Home.js';
-import Blogpages from "./components/Blogpages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Attour from "./components/Attours";
-import Atstays from "./components/Atstays";
-import Atstaynextpage from "./components/Atstaynextpage";
-import SignIn from "./components/Signin";
-// import Signup from "./components/SignUp";
-import TermsCondition from'./components/TermsCondition'
-import Privacypolicy from "./components/Privacypolicy";
-import Rooms from "./components/Rooms";
-import BookingForm from "./components/BookingForm";
-import CartDetailsPage from "./components/CartDetailsPage";
-import CartDetailsPage2 from "./components/CartDetailsPage2";
-import Attournext from "./components/Attournext";
-import Form from "./components/Form";
-import Form2 from "./components/Form2";
-import Dropdown from "./components/dropdown.js";
-import Invoice from "./components/Invoice.js";
-import Invoice2 from "./components/Invoice2.js";
-import Panel from './components/Panel.js';
-import Allprice from './components/Allprice.js';
-// import Panel1 from "./components/Panel.js";
+import "./App.css";
+import HomePage from "./pages/HomePage";
+import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
+import CreateListing from "./pages/CreateListing";
+import ListingDetails from "./pages/ListingDetails";
+import TripList from "./pages/TripList";
+import WishList from "./pages/WishList";
+import PropertyList from "./pages/PropertyList";
+import ReservationList from "./pages/ReservationList";
+import CategoryPage from "./pages/CategoryPage";
+import SearchPage from "./pages/SearchPage";
+import HostLogin from "./pages/host/HostLogin";
+import HostRegister from "./pages/host/HostRegister";
+import Navbar from "./components/Navbar";
+import BookingPage from "./pages/booking/BookingPage";
+import BookingForm from "./pages/booking/BookingForm";
+import CartDetailsPage from "./pages/temp/CartDetailsPage";
+import Invoice from "./pages/temp/invoice";
+import { useState } from "react";
 
 function App() {
+  const [dropdownMenu, setDropdownMenu] = useState(false);
+
   return (
-    <BrowserRouter>
-    
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/bloggerpage" element={<Blogpages />} />
-        <Route path="/attours" element={<Attour/>} />
-        <Route path="/atstays" element={<Atstays/>} />
-        <Route  path ="/atstay/:id" element={<Atstaynextpage></Atstaynextpage>}/>
-        <Route path ="/signin" element={<SignIn></SignIn>} ></Route>
-        {/* <Route path ="/signup" element={<Signup></Signup>} ></Route> */}
-        <Route path ="/terms" element={<TermsCondition></TermsCondition>} ></Route>
-        <Route path ="/privacy" element={<Privacypolicy></Privacypolicy>} ></Route>
-        <Route path ="/rooms/:id" element={<Rooms></Rooms>} ></Route>
-        <Route path ="/booking" element={<BookingForm/>} ></Route>
-        <Route path ="/cartpage/:id" element={<CartDetailsPage/>} ></Route>
-        <Route path="/family-trip/:id" element={<Attournext />}></Route>
-        <Route path="/cart/:id" element={<CartDetailsPage2 />}></Route>
-        <Route path="/form" element={<Form />}></Route>
-        <Route path="/forms" element={<Form2 />}></Route>
-        <Route path="/drop" element={<Dropdown />}></Route>
-        <Route path="/invoice" element={<Invoice />}></Route>
-        <Route path="/invoice2" element={<Invoice2 />}></Route>
-        <Route path ="/panel/:id" element={<Panel/>} ></Route>
-        <Route path ="/allprice" element={<Allprice/>} ></Route>
-
-        {/* <Route path ="/panel1" element={<Panel1/>} ></Route> */}
-
-      </Routes>
-    </BrowserRouter>
-    
-   
+    <div onClick={() => setDropdownMenu(false)}>
+      <BrowserRouter>
+        <Navbar dropdownMenu={dropdownMenu} setDropdownMenu={setDropdownMenu} />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/hostRegister" element={<HostRegister />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/hostLogin" element={<HostLogin />} />
+          <Route path="/create-listing" element={<CreateListing />} />
+          <Route path="/properties/:listingId" element={<ListingDetails />} />
+          <Route
+            path="/properties/category/:category"
+            element={<CategoryPage />}
+          />
+          <Route path="/properties/search/:search" element={<SearchPage />} />
+          <Route path="/:userId/trips" element={<TripList />} />
+          <Route path="/:userId/wishList" element={<WishList />} />
+          <Route path="/:userId/properties" element={<PropertyList />} />
+          <Route path="/:userId/reservations" element={<ReservationList />} />
+          <Route path="/bookingPage" element={<BookingPage />} />
+          <Route path="/bookingForm" element={<BookingForm />} />
+          <Route path="/cartDetailsPage" element={<CartDetailsPage />} />
+          <Route path="/invoice" element={<Invoice />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
