@@ -1,6 +1,7 @@
 import React from "react";
 import "../../styles/BookingPage.scss";
 import { Link } from "react-router-dom";
+import { API_3 } from "../../api/api";
 const BookingPage = () => {
   return (
     <div className="main-container">
@@ -18,7 +19,7 @@ const BookingPage = () => {
             </div>
             <div className="img">
               <img
-                src="http://localhost:5000/property/2bmiyu1gkolt9x7386Attours15.webp"
+                src={`${API_3}property/2bmiyu1gkolt9x7386Attours15.webp`}
                 alt=""
               />
             </div>

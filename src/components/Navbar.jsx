@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { setHostLogout, setLogout } from "../redux/state";
 import UpperNavbar from "./UpperNavbar";
 import LowerNavbar from "./LowerNavbar";
+import { API_3 } from "../api/api";
 
 const Navbar = ({ dropdownMenu, setDropdownMenu }) => {
   // const [dropdownMenu, setDropdownMenu] = useState(false);
@@ -52,7 +53,10 @@ const Navbar = ({ dropdownMenu, setDropdownMenu }) => {
             </li>
           </ul>
         </div>
-        <div style={{ display: "flex", gap: "2rem" }}>
+        <div
+          className="search-container"
+          style={{ display: "flex", gap: "2rem", alignItems: "center" }}
+        >
           {/* <div className="navbar_search">
             <input
               type="text"
@@ -115,10 +119,7 @@ const Navbar = ({ dropdownMenu, setDropdownMenu }) => {
                 <Person sx={{ color: variables.darkgrey }} />
               ) : (
                 <img
-                  src={`http://localhost:3001/${user.profileImagePath.replace(
-                    "public",
-                    ""
-                  )}`}
+                  src={`${API_3}${user.profileImagePath.replace("public", "")}`}
                   alt="profile photo"
                   style={{ objectFit: "cover", borderRadius: "50%" }}
                 />

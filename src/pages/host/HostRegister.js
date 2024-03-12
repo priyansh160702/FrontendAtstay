@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../../styles/Register.scss";
-import { API_5 } from "../../api/api";
+import { API_3 } from "../../api/api";
 
 const HostRegister = () => {
   const [formData, setFormData] = useState({
@@ -23,36 +24,31 @@ const HostRegister = () => {
 
   const [passwordMatch, setPasswordMatch] = useState(true);
 
-  useEffect(() => {
-    setPasswordMatch(
-      formData.password === formData.confirmPassword ||
-        formData.confirmPassword === ""
-    );
-  });
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("handle submit called");
+    console.log("formData:", formData);
 
     try {
-      const register_form = new FormData();
-
-      for (var key in formData) {
-        register_form.append(key, formData[key]);
-      }
-      console.log(formData);
-
-      const response = await fetch(API_5, {
-        method: "POST",
-        body: formData,
+      const { firstName, lastName, email, password, contact } = formData;
+      const response = await axios.post(`${API_3}api/Registerhosts`, {
+        firstName,
+        lastName,
+        email,
+        password,
+        contact,
       });
-
-      if (response.ok) {
-        navigate("/login");
+      console.log("response", response);
+      if (response.status === 201) {
+        navigate("/hostLogin");
+      } else {
+        throw new Error("Registration failed");
       }
-    } catch (err) {
-      console.log("Registration failed", err.message);
+    } catch (error) {
+      console.error("Registration failed:", error.message);
+      window.alert("Registration failed. Please try again.");
     }
   };
 
@@ -73,13 +69,20 @@ const HostRegister = () => {
             name="lastName"
             value={formData.lastName}
             onChange={handleChange}
-            required
           />
           <input
             placeholder="Email"
             name="email"
             type="email"
             value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <input
+            placeholder="contact"
+            name="contact"
+            type="string"
+            value={formData.contact}
             onChange={handleChange}
             required
           />
@@ -104,27 +107,6 @@ const HostRegister = () => {
             <p style={{ color: "red" }}>Passwords are not matched!</p>
           )}
 
-          {/* <input
-            id="image"
-            type="file"
-            name="profileImage"
-            accept="image/*"
-            style={{ display: "none" }}
-            onChange={handleChange}
-            required
-          /> */}
-          {/* <label htmlFor="image">
-            <img src="/assets/addImage.png" alt="add profile photo" />
-            <p>Upload Your Photo</p>
-          </label>
-
-          {formData.profileImage && (
-            <img
-              src={URL.createObjectURL(formData.profileImage)}
-              alt="profile photo"
-              style={{ maxWidth: "80px" }}
-            />
-          )} */}
           <button type="submit" disabled={!passwordMatch}>
             REGISTER
           </button>

@@ -5,7 +5,7 @@ import ListingCard from "./ListingCard";
 import Loader from "./Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { setListings } from "../redux/state";
-import { API_7 } from "../api/api";
+import { API_3, API_7 } from "../api/api";
 import LowerNavbar from "./LowerNavbar";
 
 const Listings = () => {
@@ -20,7 +20,7 @@ const Listings = () => {
     try {
       const response = await fetch(
         selectedCategory !== "All"
-          ? `http://localhost:5000/properties?category=${selectedCategory}`
+          ? `${API_3}properties?category=${selectedCategory}`
           : API_7,
         {
           method: "GET",
