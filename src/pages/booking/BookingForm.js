@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { API_12, API_13, API_14 } from "../../api/api";
+import { API_12, API_13, API_14, API_3 } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -156,9 +156,6 @@ import { useSelector } from "react-redux";
 
 // export default BookingForm;
 
-
-
-
 // import React, { useState, useEffect } from 'react';
 // import { useSelector } from 'react-redux';
 // import { useNavigate } from 'react-router-dom';
@@ -181,22 +178,22 @@ const BookingForm = () => {
     localStorage.setItem("amount", amount); // Set the 'amount' in localStorage
     try {
       if (contact.length > 9) {
-        let data1 = await fetch("https://localhost:5000/Order4", {
+        let data1 = await fetch(`${API_3}/Order4`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, amount }),
         });
 
         if (!data1.ok) {
-          throw new Error('Failed to fetch');
+          throw new Error("Failed to fetch");
         }
 
-        let keys = await fetch("https://localhost:5000/key", {
+        let keys = await fetch(`${API_3}key`, {
           method: "GET",
         });
 
         if (!keys.ok) {
-          throw new Error('Failed to fetch');
+          throw new Error("Failed to fetch");
         }
 
         keys = await keys.json();
@@ -216,7 +213,7 @@ const BookingForm = () => {
             name: "Atraski Model Registration",
             description: "",
             order_id: data1.order.id,
-            callback_url: "https://localhost:5000/verification",
+            callback_url: `${API_3}verification`,
             handler: function (response) {
               console.log("Payment successful: ", response);
               try {
