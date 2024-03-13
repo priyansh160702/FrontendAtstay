@@ -15,12 +15,12 @@ import { setBookingData, setTempHostData } from "../redux/state";
 
 const ListingDetails = () => {
   const [loading, setLoading] = useState(true);
-  const [selectRoom, setSelectedRoom] = useState("standard");
+  const [listing, setListing] = useState(null);
+  const [selectRoom, setSelectedRoom] = useState();
   const [price, setPrice] = useState(0);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [datesArray, setDatesArray] = useState([]);
-  const [listing, setListing] = useState(null);
   const [availability, setAvailability] = useState("");
   const [roomCount, setRoomCount] = useState(1);
   const [roomCountErr, setRoomCountErr] = useState();
@@ -42,6 +42,14 @@ const ListingDetails = () => {
   };
   useEffect(() => {
     getHostInfo();
+    setSelectedRoom(
+      listing &&
+        (listing.rooms[0].price === 0
+          ? listing.rooms[1].price === 0
+            ? listing.rooms[2].roomType
+            : listing.rooms[1].roomType
+          : listing.rooms[0].roomType)
+    );
   }, [listing]);
 
   const getListingDetails = async () => {
@@ -380,7 +388,7 @@ const ListingDetails = () => {
           className="details"
           style={{ display: "flex", gap: "50px", flexWrap: "wrap" }}
         >
-          <div className="property-details" style={{ maxWidth: "60%" }}>
+          <div className="property-details">
             <h2>
               {listing.type} in {listing.city}, {listing.province},{" "}
               {listing.country}
@@ -461,9 +469,10 @@ const ListingDetails = () => {
                       background:
                         selectRoom === "standard" ? "#66cccc" : "white",
                       color: selectRoom === "standard" ? "white" : "#66cccc",
+                      display: listing.rooms[0].price !== 0 ? "" : "none",
                     }}
                   >
-                    Single
+                    Standard
                   </button>
                   <button
                     onClick={() => setSelectedRoom("double")}
@@ -547,7 +556,7 @@ const ListingDetails = () => {
                 onClick={handleSubmit}
                 disabled={!(availability === "Available")}
                 style={{
-                  background: availability === "Available" ? "" : "grey",
+                  background: availability === "Available" ? "red" : "grey",
                 }}
               >
                 BOOKING
