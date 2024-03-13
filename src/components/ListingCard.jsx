@@ -122,7 +122,15 @@ const ListingCard = ({
           <p>{type}</p>
           <p>
             <span>
-              Rs. {type === "Rooms" ? rooms && rooms[0].price : price}
+              Rs.{" "}
+              {type === "Rooms"
+                ? rooms &&
+                  (rooms[0].price === 0
+                    ? rooms[1].price === 0
+                      ? rooms[2].price
+                      : rooms[1].price
+                    : rooms[0].price)
+                : price}
             </span>{" "}
             per night
           </p>

@@ -35,7 +35,7 @@ th {
 /* Button Styles */
 button {
   display: block;
-  margin: 20px auto;
+  /* margin: 20px auto; */
   padding: 10px 20px;
   background-color: #333;
   color: white;

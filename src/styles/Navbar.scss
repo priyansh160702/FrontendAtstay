@@ -17,6 +17,9 @@
     padding: 10px 20px;
     gap: 0rem;
     flex-direction: column;
+    .search-container{
+      margin-left: -50px;
+    }
   }
 
   img {
@@ -24,7 +27,9 @@
     cursor: pointer;
   }
   @include sm {
-    margin-left: -4rem;
+    // margin-left: -4rem;
+
+    
   }
 
   .links-container {
@@ -58,6 +63,7 @@
     @include sm {
       gap: 0px !important;
       margin-left: 8%;
+      
     }
     input {
       border: none;

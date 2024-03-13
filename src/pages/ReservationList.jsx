@@ -20,6 +20,7 @@ const ReservationList = () => {
       const response = await axios.post(`${API_3}`, {
         id: userId,
       });
+      console.log("response", response);
     } catch (error) {}
   };
 
@@ -31,6 +32,7 @@ const ReservationList = () => {
       });
 
       const data = await response.json();
+      console.log("response", data);
       dispatch(setReservationList(data));
       setLoading(false);
     } catch (err) {
