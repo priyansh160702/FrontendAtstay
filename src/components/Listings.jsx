@@ -28,7 +28,7 @@ const Listings = () => {
       );
 
       const data = await response.json();
-      console.log("listingData", data);
+      // console.log("listingData", data);
       dispatch(setListings({ listings: data }));
       setLoading(false);
     } catch (err) {
@@ -39,7 +39,7 @@ const Listings = () => {
   useEffect(() => {
     getFeedListings();
   }, [selectedCategory]);
-  console.log("stored listing", listings);
+  // console.log("stored listing", listings);
 
   return (
     <>

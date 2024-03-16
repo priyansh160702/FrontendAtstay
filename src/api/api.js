@@ -24,6 +24,9 @@ const API_19 = `${API}/sendInvoiceByEmail`;
 const API_20 = `${API}/users/`;
 const API_21 = `${API}/properties/search/`;
 const API_22 = `${API}/bookings/create`;
+const API_23 = `${API}/bookings/getUserBookingData`;
+const API_24 = `${API}/properties/getListingsHost`;
+const API_25 = `${API}/properties/updateListing`;
 
 // for production
 
@@ -50,4 +53,7 @@ export {
   API_20,
   API_21,
   API_22,
+  API_23,
+  API_24,
+  API_25,
 };

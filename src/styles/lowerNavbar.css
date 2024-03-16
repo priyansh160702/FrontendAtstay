@@ -87,3 +87,38 @@
 .carousel-1 {
   transition: all 5s;
 }
+
+/* lowerNavbar.css */
+
+/* Container for carousel items */
+.product-container {
+  display: flex; /* Display carousel items in a row */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  scroll-behavior: smooth; /* Smooth scrolling behavior */
+  -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS devices */
+}
+
+/* Individual carousel item */
+.carousel-1 {
+  flex-shrink: 0; /* Prevent items from shrinking */
+  margin-right: 10px; /* Add space between items */
+}
+
+/* Container for the next and previous buttons */
+.product-carousel-1 {
+  display: flex; /* Display buttons in a row */
+  align-items: center; /* Center buttons vertically */
+}
+
+/* Styles for previous button */
+.pre-btn-1,
+.next-btn-1 {
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+/* Styles for the button icon */
+.pre-btn-1 img,
+.next-btn-1 img {
+  width: 22px; /* Set width of the icon */
+  transform: scaleX(-1); /* Flip icon horizontally for previous button */
+}
