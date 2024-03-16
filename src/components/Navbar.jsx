@@ -155,6 +155,7 @@ const Navbar = ({ dropdownMenu, setDropdownMenu }) => {
             {dropdownMenu && host && (
               <div className="navbar_right_accountmenu">
                 <Link to="/hostDashboard">Dashboard</Link>
+                <Link to={`/${host._id}/properties`}>Property List</Link>
                 <Link to="/create-listing">Become A Host</Link>
 
                 <Link

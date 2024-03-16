@@ -46,16 +46,16 @@ const ListingCard = ({
 
   /* ADD TO WISHLIST */
   const user = useSelector((state) => state.user);
-  console.log("user", user);
+  // console.log("user", user);
   const wishlist = user?.wishList || [];
 
-  console.log("wishlist", wishlist);
+  // console.log("wishlist", wishlist);
   const isLiked = wishlist?.find((item) => item.toString() === listingId);
-  console.log("isLiked for ", listingId, " ", isLiked);
+  // console.log("isLiked for ", listingId, " ", isLiked);
   // let isLiked;
 
   const patchWishList = async () => {
-    console.log("user", user);
+    // console.log("user", user);
     if (user?._id !== creator._id) {
       const response = await fetch(`${API_20}${user?._id}/${listingId}`, {
         method: "PATCH",
@@ -64,7 +64,7 @@ const ListingCard = ({
         },
       });
       const data = await response.json();
-      console.log("Response data", data);
+      // console.log("Response data", data);
       dispatch(setWishList(data.wishList));
     } else {
       return;

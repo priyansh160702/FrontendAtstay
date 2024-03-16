@@ -1,33 +1,49 @@
 import "../styles/List.scss";
 import { useDispatch, useSelector } from "react-redux";
-import Navbar from "../components/Navbar";
 import ListingCard from "../components/ListingCard";
 import { useEffect, useState } from "react";
-import { setPropertyList } from "../redux/state";
 import Loader from "../components/Loader";
 import Footer from "../components/Footer";
-import { API_3 } from "../api/api";
+import { useNavigate } from "react-router-dom";
+
+import { API_24, API_3 } from "../api/api";
+import axios from "axios";
 
 const PropertyList = () => {
   const [loading, setLoading] = useState(true);
   const user = useSelector((state) => state.user);
-  const propertyList = user?.propertyList;
+  const [propertyList, setPropertyList] = useState();
+  const host = useSelector((state) => state.host);
   console.log(user);
 
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
+
   const getPropertyList = async () => {
     try {
-      const response = await fetch(`${API_3}users/${user._id}/properties`, {
-        method: "GET",
-      });
-      const data = await response.json();
-      console.log(data);
-      dispatch(setPropertyList(data));
+      const response = await axios.get(`${API_24}/${host._id}`);
+      console.log("response: ", response.data);
+      setPropertyList(response.data);
       setLoading(false);
-    } catch (err) {
-      console.log("Fetch all properties failed", err.message);
+    } catch (error) {
+      console.log(error);
     }
   };
+
+  // const getPropertyList = async () => {
+  //   try {
+  //     const response = await fetch(`${API_3}users/${user._id}/properties`, {
+  //       method: "GET",
+  //     });
+  //     const data = await response.json();
+  //     console.log(data);
+  //     dispatch(setPropertyList(data));
+  //     setLoading(false);
+  //   } catch (err) {
+  //     console.log("Fetch all properties failed", err.message);
+  //   }
+  // };
 
   useEffect(() => {
     getPropertyList();
@@ -37,12 +53,13 @@ const PropertyList = () => {
     <Loader />
   ) : (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <h1 className="title-list">Your Property List</h1>
       <div className="list">
         {propertyList?.map(
           ({
-            _id,
+            hotelId,
+            hostId,
             creator,
             listingPhotoPaths,
             city,
@@ -52,19 +69,30 @@ const PropertyList = () => {
             type,
             price,
             booking = false,
+            rooms,
           }) => (
-            <ListingCard
-              listingId={_id}
-              creator={creator}
-              listingPhotoPaths={listingPhotoPaths}
-              city={city}
-              province={province}
-              country={country}
-              category={category}
-              type={type}
-              price={price}
-              booking={booking}
-            />
+            <div
+              className="property-list"
+              onClick={(e) => {
+                navigate(`/editListing/${hotelId}`);
+                e.stopPropagation();
+              }}
+              key={hotelId}
+            >
+              <ListingCard
+                listingId={hotelId}
+                creator={hostId}
+                listingPhotoPaths={listingPhotoPaths}
+                city={city}
+                province={province}
+                country={country}
+                category={category}
+                type={type}
+                price={price}
+                booking={booking}
+                rooms={rooms}
+              />
+            </div>
           )
         )}
       </div>

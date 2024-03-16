@@ -19,6 +19,7 @@ import BookingForm from "./pages/booking/BookingForm";
 import CartDetailsPage from "./pages/temp/CartDetailsPage";
 import Invoice from "./pages/temp/invoice";
 import { useState } from "react";
+import EditListing from "./pages/EditListing";
 
 function App() {
   const [dropdownMenu, setDropdownMenu] = useState(false);
@@ -48,6 +49,7 @@ function App() {
           <Route path="/bookingForm" element={<BookingForm />} />
           <Route path="/cartDetailsPage" element={<CartDetailsPage />} />
           <Route path="/invoice" element={<Invoice />} />
+          <Route path="/editListing/:hotelId" element={<EditListing />} />
         </Routes>
       </BrowserRouter>
     </div>

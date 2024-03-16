@@ -63,7 +63,8 @@ export default function CartDetailsPage() {
   const adult1 = parseInt(localStorage.getItem("adult")) || 0;
   const children = parseInt(localStorage.getItem("child")) || 0;
   const selectedDate = localStorage.getItem("selectedDate") || "";
-  const amount = bookingData.perRoomPrice * bookingData.dayCount;
+  const amount =
+    bookingData.perRoomPrice * bookingData.dayCount * bookingData.roomCount;
   const adds = localStorage.setItem("add", add) || "";
   const mails = localStorage.setItem("mail", email) || "";
   const phones = localStorage.setItem("phone", phone) || "";
@@ -340,12 +341,20 @@ export default function CartDetailsPage() {
                       <div className="bookingDetails my-3">
                         <p>Adult : 2 </p>
                         <p>Children : 1</p>
+                        <p
+                          style={{
+                            display: elm.type === "Rooms" ? "" : "none",
+                          }}
+                        >
+                          Rooms :{elm.roomCount}
+                        </p>
                         {/* <p>
                           Number of Room : {room} = {room} x {diff * elm.price}{" "}
                           = {room * diff * elm.price}
                         </p> */}
                         <div className="total">
-                          Total amount : ₹ {elm.dayCount * elm.perRoomPrice}
+                          Total amount : ₹{" "}
+                          {elm.dayCount * elm.perRoomPrice * elm.roomCount}
                         </div>
                       </div>
                     </div>
@@ -377,12 +386,16 @@ export default function CartDetailsPage() {
                     >
                       <div className="d-flex justify-content-between my-3">
                         <span>Subtotal</span>
-                        <span>₹ {elm.dayCount * elm.perRoomPrice}</span>
+                        <span>
+                          ₹ {elm.dayCount * elm.perRoomPrice * elm.roomCount}
+                        </span>
                       </div>
 
                       <div className="d-flex justify-content-between">
                         <span>Total</span>
-                        <span>₹ {elm.dayCount * elm.perRoomPrice}</span>
+                        <span>
+                          ₹ {elm.dayCount * elm.perRoomPrice * elm.roomCount}
+                        </span>
                       </div>
 
                       <center>
@@ -432,9 +445,10 @@ export default function CartDetailsPage() {
                   value={email}
                   required
                   placeholder="email"
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
+                  // onChange={(e) => {
+                  //   setEmail(e.target.value);
+                  // }}
+                  disabled
                 />
                 <label for="email"></label>
               </div>
