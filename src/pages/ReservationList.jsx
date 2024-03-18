@@ -16,16 +16,27 @@ const ReservationList = () => {
   const [bookings, setBookings] = useState();
   const listings = useSelector((state) => state.listings);
   const [bookingData, setBookingData] = useState([]);
+
+  const handleBookingData = ({ booking, listing }) => {
+    if (bookingData.includes({ booking, listing })) {
+    } else {
+    }
+  };
   useEffect(() => {
     if (bookings && bookings.length > 0 && listings && listings.length > 0) {
       for (const elm of bookings) {
-        console.log("inside first for loop");
+        // console.log("inside first for loop");
         for (const data of listings) {
-          console.log("inside second for loop");
+          // console.log("inside second for loop");
           if (elm.listingId === data.hotelId) {
-            // console.log("Inside if block ", { booking: elm, listing: data });
+            console.log("Inside if block ", elm._id, " ", data.hotelId);
             if (!bookingData.some((item) => item.booking._id === elm._id)) {
-              setBookingData([...bookingData, { booking: elm, listing: data }]);
+              console.log("inside if block on true : ", elm._id);
+              // setBookingData([...bookingData, { booking: elm, listing: data }]);
+              setBookingData((prev) => [
+                ...prev,
+                { booking: elm, listing: data },
+              ]);
             }
           }
         }

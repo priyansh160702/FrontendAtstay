@@ -243,6 +243,7 @@ const ListingDetails = () => {
           img: listing.listingPhotoPaths[0],
           listing: listing,
           dates: { startDate, endDate },
+          datesArray: datesArray,
         };
         console.log("dayCount", dayCount);
         console.log("handleSubmit button clicked", bookingForm);
