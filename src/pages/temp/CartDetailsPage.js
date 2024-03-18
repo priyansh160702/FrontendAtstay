@@ -234,6 +234,7 @@ export default function CartDetailsPage() {
         totalPrice: bookingData.dayCount * bookingData.perRoomPrice,
         status: "booked",
         paymentStatus: "success",
+        datesArray: bookingData.datesArray,
         razorpay_payment_id: resp.razorpay_payment_id,
         razorpay_order_id: resp.razorpay_order_id,
       };

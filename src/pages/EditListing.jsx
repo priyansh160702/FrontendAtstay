@@ -240,20 +240,32 @@ const EditListing = () => {
         //   listingForm.append("listingPhotos", photo);
         // });
 
-        for (const [key, value] of listingForm.entries()) {
-          console.log(key + ": " + value);
-        }
+        // for (const [key, value] of listingForm.entries()) {
+        //   console.log(key + ": " + value);
+        // }
         // console.log("rooms", roomTypes);
 
         // const response = await fetch(API_4, {
         //   method: "POST",
         //   body: listingForm,
         // });
-        const response = await axios.patch(`${API_25}`, listingForm, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        const data = {
+          hostId: creatorId,
+          category,
+          type,
+          streetAddress: formLocation.streetAddress,
+          city: formLocation.city,
+          province: formLocation.province,
+          country: formLocation.country,
+          amenities,
+          title: formDescription.title,
+          description: formDescription.description,
+          highlight: formDescription.highlight,
+          highlightDesc: formDescription.highlightDesc,
+          hotelId,
+          pincode,
+        };
+        const response = await axios.patch(`${API_25}`, data);
 
         console.log(response);
         if (response.status === 200) {
