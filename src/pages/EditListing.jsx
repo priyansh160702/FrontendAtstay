@@ -79,8 +79,11 @@ const EditListing = () => {
         description: listing.description,
         highlight: listing.highlight,
         highlightDesc: listing.highlightDesc,
-        price: 0,
+        price: listing.price,
       });
+      setStandardRoom(listing.rooms[0].price);
+      setDoubleRoom(listing.rooms[1].price);
+      setDeluxeRoom(listing.rooms[2].price);
     }
   }, [listing]);
   useEffect(() => {
@@ -264,13 +267,17 @@ const EditListing = () => {
           highlightDesc: formDescription.highlightDesc,
           hotelId,
           pincode,
+          price: formDescription.price,
+          standardRoom,
+          doubleRoom,
+          deluxeRoom,
         };
         const response = await axios.patch(`${API_25}`, data);
 
         console.log(response);
         if (response.status === 200) {
           // Handle success
-          // navigate("/");
+          navigate(`/${creatorId}/properties`);
         }
       }
     } catch (error) {
@@ -760,7 +767,7 @@ const EditListing = () => {
           </div>
 
           <button className="submit_btn" type="submit">
-            CREATE YOUR LISTING
+            UPDATE YOUR LISTING
           </button>
         </form>
       </div>
