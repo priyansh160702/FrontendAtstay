@@ -27,6 +27,7 @@ const API_22 = `${API}/bookings/create`;
 const API_23 = `${API}/bookings/getUserBookingData`;
 const API_24 = `${API}/properties/getListingsHost`;
 const API_25 = `${API}/properties/updateListing`;
+const API_26 = `${API}/api/createAvailabilities`;
 
 // for production
 
@@ -56,4 +57,5 @@ export {
   API_23,
   API_24,
   API_25,
+  API_26,
 };
