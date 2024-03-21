@@ -642,7 +642,7 @@ const CreateListing = () => {
                       />
                     </div>
                     <div className="rooms">
-                      <label htmlFor="deluxe">Delux</label>
+                      <label htmlFor="deluxe">Deluxe</label>
                       <input
                         type="number"
                         placeholder="Enter per night price"
