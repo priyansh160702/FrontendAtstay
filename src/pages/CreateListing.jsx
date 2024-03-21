@@ -654,32 +654,6 @@ const CreateListing = () => {
                       />
                     </div>
                   </div>
-                  {/*  {roomTypes.map((room, index) => (
-                    <div className="rooms" key={index}>
-                      <label htmlFor={room.roomType}>{room.roomType}</label>
-                      <input
-                        type="number"
-                        placeholder="Enter per night price"
-                        name="price"
-                        className="price"
-                        id={room.roomType}
-                        value={room.price}
-                        onChange={(e) => handleChange(index, e)}
-                      />
-                       <button type="button" onClick={() => handleAdd()}>
-                        Add
-                      </button> 
-
-                      {roomTypes.length > 1 && (
-                        <button
-                          type="button"
-                          onClick={() => handleRemove(index)}
-                        >
-                          Remove
-                        </button>
-                      )}
-                    </div>
-                      ))} */}
                 </div>
                 <div
                   className="entirePlace"
