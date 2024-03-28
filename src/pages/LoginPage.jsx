@@ -1,19 +1,24 @@
 import React, { useState } from "react";
 import "../styles/Login.scss";
-import { setLogin } from "../redux/state";
+import { setLogin, setShowPopup } from "../redux/state";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { API_1 } from "../api/api";
 import Navbar from "../components/Navbar";
+import { useSelector } from "react-redux";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const popup = useSelector((state) => state.showPopup);
 
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
+  const handleClick = (e) =>{
+    dispatch(setShowPopup({popup:false}))
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -37,6 +42,7 @@ const LoginPage = () => {
           })
         );
         navigate("/");
+        dispatch(setShowPopup({popup:false}))
       }
     } catch (err) {
       console.log("Login failed", err.message);
@@ -45,8 +51,11 @@ const LoginPage = () => {
 
   return (
     <>
-      <div className="login">
-        <div className="login_content">
+      <div className="login"
+      onClick={handleClick}>
+        <div className="login_content" onClick={(e) => e.stopPropagation()}>
+        <p style={{display: popup ? "flex" : "none",justifyContent:'flex-end',fontSize:'2rem',cursor:'pointer'}}
+        onClick={(e)=>handleClick(e)}>X</p>
           <div className="heading">Login Page</div>
           <form className="login_content_form" onSubmit={handleSubmit}>
             <input

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { act } from "react-dom/test-utils";
 
 const initialState = {
   user: null,
@@ -6,6 +7,7 @@ const initialState = {
   host: null,
   bookingData: null,
   tempHost: null,
+  showPopup: false,
 };
 
 export const userSlice = createSlice({
@@ -51,6 +53,9 @@ export const userSlice = createSlice({
     setBookingData: (state, action) => {
       state.bookingData = action.payload.bookingData;
     },
+    setShowPopup:(state,action) =>{
+      state.showPopup = action.payload.popup;
+    }
   },
 });
 
@@ -67,5 +72,6 @@ export const {
   setHostData,
   setBookingData,
   setTempHostData,
+  setShowPopup,
 } = userSlice.actions;
 export default userSlice.reducer;
