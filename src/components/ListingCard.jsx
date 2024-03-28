@@ -7,7 +7,7 @@ import {
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setWishList } from "../redux/state";
+import { setShowPopup, setWishList } from "../redux/state";
 import { API_1, API_20, API_3 } from "../api/api";
 
 const ListingCard = ({
@@ -56,6 +56,9 @@ const ListingCard = ({
 
   const patchWishList = async () => {
     // console.log("user", user);
+    if(user == null){
+      dispatch(setShowPopup({popup:true}))
+    }
     if (user?._id !== creator._id) {
       const response = await fetch(`${API_20}${user?._id}/${listingId}`, {
         method: "PATCH",
@@ -91,7 +94,7 @@ const ListingCard = ({
               />
               <div
                 className="prev-button"
-                onClick={(e) => {
+                onClick={(e) =>  {
                   e.stopPropagation();
                   goToPrevSlide(e);
                 }}
@@ -153,7 +156,7 @@ const ListingCard = ({
           e.stopPropagation();
           patchWishList();
         }}
-        disabled={!user}
+        // disabled={!user}
       >
         {isLiked ? (
           <Favorite sx={{ color: "red" }} />

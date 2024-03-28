@@ -5,11 +5,12 @@ import Listings from "../components/Listings";
 import Footer from "../components/Footer";
 import LowerNavbar from "../components/LowerNavbar";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_3 } from "../api/api";
 import { useDispatch } from "react-redux";
-import { setWishList } from "../redux/state";
+import { setShowPopup, setWishList } from "../redux/state";
+import LoginPopup from "../components/LoginPopup";
 
 const HomePage = () => {
   const user = useSelector((state) => state?.user);
@@ -24,6 +25,10 @@ const HomePage = () => {
     }
   };
 
+ useEffect(() =>{
+  dispatch(setShowPopup({popup:false}))
+ },[])
+
   useEffect(() => {
     if (user) {
       gettingWishlist();
@@ -31,6 +36,7 @@ const HomePage = () => {
   }, []);
   return (
     <>
+    <LoginPopup />
       {/* <LowerNavbar /> */}
       <Listings />
       {/* <Slide /> */}

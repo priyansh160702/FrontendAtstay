@@ -74,48 +74,48 @@ const ListingDetails = () => {
 
   // console.log(listing);
 
-  const handleAvailability = async () => {
-    try {
-      if (datesArray) {
-        if (listing?.type === "An entire place") {
-          const resp = await axios.post(API_10, {
-            date: datesArray,
-            type: "An entire place",
-            hotelId: "2bmiyu1e0slsylsju",
-          });
-          // console.log("resp", resp?.data);
-          if (resp?.data.code == 2) {
-            // console.log(resp?.data);
-            // console.log("inside availability not found");
-            setAvailability("Not Available");
-          }
-          if (resp?.data?.availability[0].bookingStatus === false) {
-            setAvailability("Available");
-          } else if (resp?.data?.availability[0].bookingStatus) {
-            setAvailability("Not Available");
-          }
+  // const handleAvailability = async () => {
+  //   try {
+  //     if (datesArray) {
+  //       if (listing?.type === "An entire place") {
+  //         const resp = await axios.post(API_10, {
+  //           date: datesArray,
+  //           type: "An entire place",
+  //           hotelId: "2bmiyu1e0slsylsju",
+  //         });
+  //         // console.log("resp", resp?.data);
+  //         if (resp?.data.code == 2) {
+  //           // console.log(resp?.data);
+  //           // console.log("inside availability not found");
+  //           setAvailability("Not Available");
+  //         }
+  //         if (resp?.data?.availability[0].bookingStatus === false) {
+  //           setAvailability("Available");
+  //         } else if (resp?.data?.availability[0].bookingStatus) {
+  //           setAvailability("Not Available");
+  //         }
 
-          // console.log("Response", listing);
-        } else if (listing?.type === "Rooms") {
-          const response = await axios.post(API_10, {
-            date: datesArray,
-            type: "Rooms",
-            hotelId: "2bmiyu1e0slsylsj0u",
-            roomType: "Standard",
-            roomNum: 6,
-          });
-          if (response) {
-            console.log(response);
-          }
-        }
-      } else {
-        window.alert("please select date range");
-      }
-      // console.log("listing", listing);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //         // console.log("Response", listing);
+  //       } else if (listing?.type === "Rooms") {
+  //         const response = await axios.post(API_10, {
+  //           date: datesArray,
+  //           type: "Rooms",
+  //           hotelId: "2bmiyu1e0slsylsj0u",
+  //           roomType: "Standard",
+  //           roomNum: 6,
+  //         });
+  //         if (response) {
+  //           console.log(response);
+  //         }
+  //       }
+  //     } else {
+  //       window.alert("please select date range");
+  //     }
+  //     // console.log("listing", listing);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   /* BOOKING CALENDAR */
   const [dateRange, setDateRange] = useState([
@@ -141,6 +141,8 @@ const ListingDetails = () => {
 
   const navigate = useNavigate();
 
+const currentDate = new Date();
+
   useEffect(() => {
     if (roomCount < 1) {
       setRoomCountErr("Room Count must be greater than 0");
@@ -154,9 +156,16 @@ const ListingDetails = () => {
       setDayCountErr(null);
       setAvailability("null");
     }
-    if (roomCount > 0 && dayCount > 0) {
-      checkAvailability();
+    if(currentDate < start){
+      if (roomCount > 0 && dayCount > 0) {
+        checkAvailability();
+        setDayCountErr(null);
+      }
+      // console.log("start :",start," \n currentDate : ",currentDate)
+    }else{
+      setDayCountErr("Please Select proper date range");
     }
+   
   }, [roomCount, dayCount, datesArray, selectRoom]);
   // useEffect(() => {
   //   console.log("roomCount", roomCount);
@@ -197,6 +206,7 @@ const ListingDetails = () => {
     // Loop through each date until the day before the end date
     while (currentDate < endDateObj) {
       const formattedDate = currentDate.toISOString().split("T")[0];
+
       dates.push(formattedDate);
 
       // Move to the next day
