@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 // import { productData1 } from "./Atstaynextdata";
 // import { productData6 } from "./Atstaynextprice";
 // import Footers from "./Footer";
-import { setBookingData } from "../../redux/state";
+import { setBookingData, setShowPopup } from "../../redux/state";
 // import Footer from "./Footer";
 
 import { useNavigate } from "react-router-dom";
@@ -15,6 +15,7 @@ import "../../styles/form.css";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import Footer from "../../components/Footer";
+import LoginPopup from "../../components/LoginPopup";
 
 export default function CartDetailsPage() {
   const bookingData = useSelector((state) => state.bookingData);
@@ -77,15 +78,21 @@ export default function CartDetailsPage() {
   // console.log(selectedDate, "ll");
 
   // const navigate = useNavigate()
+  
 
   useEffect(() => {
     const show = document.querySelector(".showsss");
     show.style.display = "none";
   }, []);
   const showsss = () => {
-    const show = document.querySelector(".showsss");
+    if(user){
+      const show = document.querySelector(".showsss");
     show.style.display = "flex";
-    show.style.overflow = "hidden"; // Enable scrolling for the specific element
+    show.style.overflow = "hidden"; 
+    }
+    else{
+dispatch(setShowPopup({popup:true}))
+    }
   };
 
   const closeee = () => {
@@ -271,9 +278,10 @@ export default function CartDetailsPage() {
     }
   };
 
-  return (
+  return (<>
+<LoginPopup/>
     <div>
-      <div className="container p-5">
+      <div className="container p-5" style={{height:"fit-content",marginTop:"30px"}}>
         {Array.isArray([mm1]) &&
           [mm1].map((elm) => {
             return (
@@ -550,5 +558,7 @@ export default function CartDetailsPage() {
       </div>
       <Footer />
     </div>
+    </>
+    
   );
 }
