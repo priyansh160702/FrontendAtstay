@@ -41,7 +41,10 @@ const LoginPage = () => {
             token: loggedIn.token,
           })
         );
-        navigate("/");
+        if(window.location.pathname === '/login'){
+
+          navigate("/");
+        }
         dispatch(setShowPopup({popup:false}))
       }
     } catch (err) {
