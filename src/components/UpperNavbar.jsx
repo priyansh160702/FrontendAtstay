@@ -8,7 +8,10 @@ export default function UpperNavbar() {
   return (
     <div>
       <div className="nav">
-        <div className="container-fluid nav-top p-2 d-flex justify-content-between ">
+        <div
+          className="container-fluid nav-top p-2 d-flex justify-content-between "
+          style={{ alignItems: "center" }}
+        >
           <div className="navtopleft">
             <Link
               to="https://m.facebook.com/story.php/?story_fbid=719437636867766&id=100064046080035"

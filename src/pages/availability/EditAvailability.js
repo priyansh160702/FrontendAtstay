@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { DateRange } from "react-date-range";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { API_26 } from "../../api/api";
 
 import "../../styles/EditAvailability.css";
@@ -20,6 +20,8 @@ const EditAvailability = () => {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [datesArray, setDatesArray] = useState([]);
+
+  const navigate = useNavigate()
 
   const [state, setState] = useState({
     standard: 0,
@@ -119,6 +121,8 @@ const EditAvailability = () => {
       console.log(element);
       CreateAvailabilityRooms(element);
     });
+    navigate("/create-availability")
+    
   };
 
   return (

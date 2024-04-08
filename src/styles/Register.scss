@@ -21,11 +21,11 @@
     border-radius: 20px;
 
     @include lg {
-      width: 60%
+      width: 60%;
     }
 
     @include mm {
-      width: 80%
+      width: 80%;
     }
 
     &_form {
@@ -70,6 +70,7 @@
 
       button {
         margin-top: 15px;
+        min-width: 10rem;
 
         @include buttonStyle;
         width: 50%;
@@ -94,9 +95,8 @@
   }
 }
 
-.heading{
+.heading {
   display: flex;
   justify-content: center;
   color: white;
-  
 }

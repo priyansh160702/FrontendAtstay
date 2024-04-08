@@ -42,33 +42,52 @@ const CategoryPage = () => {
       {/* <Navbar /> */}
       <h1 className="title-list">{category} listings</h1>
       <div className="list">
-        {listings?.map(
-          ({
-            _id,
-            creator,
-            listingPhotoPaths,
-            city,
-            province,
-            country,
-            category,
-            type,
-            price,
-            booking = false,
-            hotelId,
-          }) => (
-            <ListingCard
-              listingId={hotelId}
-              creator={creator}
-              listingPhotoPaths={listingPhotoPaths}
-              city={city}
-              province={province}
-              country={country}
-              category={category}
-              type={type}
-              price={price}
-              booking={booking}
-            />
+        {listings.length > 0 ? (
+          listings?.map(
+            ({
+              _id,
+              hostId,
+              creator,
+              listingPhotoPaths,
+              city,
+              province,
+              country,
+              category,
+              type,
+              price,
+              booking = false,
+              hotelId,
+              rooms,
+            }) => (
+              <ListingCard
+                listingId={hotelId}
+                creator={hostId}
+                listingPhotoPaths={listingPhotoPaths}
+                city={city}
+                province={province}
+                country={country}
+                category={category}
+                type={type}
+                price={price}
+                booking={booking}
+                rooms={rooms}
+              />
+            )
           )
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+            }}
+          >
+            <h2>Coming Soon..........</h2>
+            <h4>
+              connect with us: <br></br> Phone No.: 8077412283 <br></br> Email:
+              atstaytravel@gmail.com
+            </h4>
+          </div>
         )}
       </div>
       <Footer />

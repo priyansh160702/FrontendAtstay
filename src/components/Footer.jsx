@@ -3,6 +3,7 @@ import { LocationOn, LocalPhone, Email } from "@mui/icons-material";
 import { FaSquareFacebook } from "react-icons/fa6";
 import { FaInstagramSquare } from "react-icons/fa";
 import FooterLower from "./FooterLower";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -30,7 +31,10 @@ const Footer = () => {
             </li>
             <li>About Us</li>
             <li>Terms and Conditions</li>
-            <li>Refund Policy</li>
+            <li><Link to="/privacy-policy">
+            
+            Privacy Policy</Link> 
+            </li>
           </ul>
         </div>
 

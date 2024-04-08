@@ -8,6 +8,7 @@ const initialState = {
   bookingData: null,
   tempHost: null,
   showPopup: false,
+  imagePopup:false,
 };
 
 export const userSlice = createSlice({
@@ -55,6 +56,9 @@ export const userSlice = createSlice({
     },
     setShowPopup:(state,action) =>{
       state.showPopup = action.payload.popup;
+    },
+    setImagePopup: (state, action) =>{
+       state.imagePopup = action.payload.show;
     }
   },
 });
@@ -73,5 +77,6 @@ export const {
   setBookingData,
   setTempHostData,
   setShowPopup,
+  setImagePopup,
 } = userSlice.actions;
 export default userSlice.reducer;

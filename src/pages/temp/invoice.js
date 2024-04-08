@@ -41,7 +41,7 @@ function Invoice() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          clientEmail: mail,
+          clientEmail: bookingData.email,
           invoiceHTML: invoiceHTML,
           hostEmail: tempHost.email,
         }),
@@ -111,7 +111,10 @@ function Invoice() {
               Invoice Date # {date1}
               <br />
               Invoice Amount # ₹
-              {bookingData.dayCount * bookingData.perRoomPrice}.00 (INR)
+              {bookingData.dayCount *
+                bookingData.perRoomPrice *
+                bookingData.roomCount}
+              .00 (INR)
               <br />
               Order Nr. # {mmmm}
               <br />
@@ -124,17 +127,20 @@ function Invoice() {
               BILLED TO
               <br />
               {bookingData.clientName}
-              <br />
-              IN19CCDPD5287P1ZY
+              {/* <br /> */}
+              {/* IN19CCDPD5287P1ZY */}
               <br />
               {bookingData.add + " " + bookingData.pin}
               <br />
               India
               <br />
-              {bookingData.email}
+              Email : {bookingData.email}
               <br />
-              {bookingData.phone}
+              MOB : {bookingData.phone}
+              <br />
               Booking No: {bookingData.bookingNo}
+              <br />
+              Guest Count: {bookingData.guestCount}
             </th>
           </tr>
         </table>
@@ -205,7 +211,9 @@ function Invoice() {
                 padding: "15px",
               }}
             >
-              {bookingData.dayCount * bookingData.perRoomPrice}
+              {bookingData.dayCount *
+                bookingData.perRoomPrice *
+                bookingData.roomCount}
             </th>
             <th
               className="jsm"
@@ -225,7 +233,9 @@ function Invoice() {
                 padding: "15px",
               }}
             >
-              {bookingData.dayCount * bookingData.perRoomPrice}
+              {bookingData.dayCount *
+                bookingData.perRoomPrice *
+                bookingData.roomCount}
             </th>
           </tr>
 
@@ -264,15 +274,23 @@ function Invoice() {
                 padding: "15px",
               }}
             >
-              ₹{bookingData.dayCount * bookingData.perRoomPrice}.00 (INR)
+              ₹
+              {bookingData.dayCount *
+                bookingData.perRoomPrice *
+                bookingData.roomCount}
+              .00 (INR)
             </th>
           </tr>
         </table>
       </div>
 
       {/* </div> */}
-
-      <button onClick={handleDownload}>Download PDF</button>
+      <div
+        className="button"
+        style={{ justifyContent: "center", display: "flex" }}
+      >
+        <button onClick={handleDownload}>Download PDF</button>
+      </div>
     </>
   );
 }

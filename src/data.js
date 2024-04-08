@@ -62,10 +62,17 @@ export const categories = [
     description: "This property is close to the beach!",
   },
   {
+    img: "assets/desert_cat.webp",
+    label: "Desert",
+    icon: <GiCactus />,
+    description: "This property is in the desert!",
+  },
+  {
     img: "assets/lake_cat.webp",
     label: "Lakefront",
     icon: <GiBoatFishing />,
     description: "This property is near a lake!",
+    
   },
   {
     img: "assets/camping_cat.jpg",
@@ -126,12 +133,6 @@ export const categories = [
     label: "Arctic",
     icon: <BsSnow />,
     description: "This property is in arctic environment!",
-  },
-  {
-    img: "assets/desert_cat.webp",
-    label: "Desert",
-    icon: <GiCactus />,
-    description: "This property is in the desert!",
   },
   {
     img: "assets/barn_cat.jpg",

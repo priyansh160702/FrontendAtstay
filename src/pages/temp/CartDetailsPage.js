@@ -78,20 +78,18 @@ export default function CartDetailsPage() {
   // console.log(selectedDate, "ll");
 
   // const navigate = useNavigate()
-  
 
   useEffect(() => {
     const show = document.querySelector(".showsss");
     show.style.display = "none";
   }, []);
   const showsss = () => {
-    if(user){
+    if (user) {
       const show = document.querySelector(".showsss");
-    show.style.display = "flex";
-    show.style.overflow = "hidden"; 
-    }
-    else{
-dispatch(setShowPopup({popup:true}))
+      show.style.display = "flex";
+      show.style.overflow = "hidden";
+    } else {
+      dispatch(setShowPopup({ popup: true }));
     }
   };
 
@@ -238,9 +236,13 @@ dispatch(setShowPopup({popup:true}))
         children,
         startDate: bookingData.startDate,
         endDate: bookingData.endDate,
-        totalPrice: bookingData.dayCount * bookingData.perRoomPrice,
+        totalPrice:
+          bookingData.dayCount *
+          bookingData.perRoomPrice *
+          bookingData.roomCount,
         status: "booked",
         paymentStatus: "success",
+        guestCount: bookingData.guestCount,
         datesArray: bookingData.datesArray,
         razorpay_payment_id: resp.razorpay_payment_id,
         razorpay_order_id: resp.razorpay_order_id,
@@ -258,6 +260,7 @@ dispatch(setShowPopup({popup:true}))
             bookingData: {
               ...bookingData,
               bookingNo: response.data._id,
+              razorpay_order_id: response.data.razorpay_order_id,
               email,
               phone,
               add,
@@ -278,287 +281,335 @@ dispatch(setShowPopup({popup:true}))
     }
   };
 
-  return (<>
-<LoginPopup/>
-    <div>
-      <div className="container p-5" style={{height:"fit-content",marginTop:"30px"}}>
-        {Array.isArray([mm1]) &&
-          [mm1].map((elm) => {
-            return (
-              <div
-                className=""
-                style={{
-                  display: "flex",
-                  justifyContent: "space-evenly",
-                  flexWrap: "wrap",
-                }}
-              >
-                <div className="col-md-7">
-                  <div
-                    className="heading-1"
-                    style={{ borderBottom: "1px solid grey", fontSize: "25px" }}
-                  >
-                    <h3>Cart Items</h3>
-                  </div>
-
-                  <div className="cartDetails my-4 d-flex">
-                    <div className="Images">
-                      <img
-                        src={`${API_3}${elm.img.replace("public", "")}`}
-                        alt="sklfjls"
-                        style={{ width: "150px", height: "150px" }}
-                      ></img>
+  return (
+    <>
+      <LoginPopup />
+      <div>
+        <div
+          className="container p-5  checkoutmainbox"
+          style={{ height: "fit-content" }}
+        >
+          {Array.isArray([mm1]) &&
+            [mm1].map((elm) => {
+              return (
+                <div
+                  className=""
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    flexWrap: "wrap",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "25px",
+                  }}
+                >
+                  <div className="col-md-6 mx-5">
+                    <div
+                      className="heading-1"
+                      style={{
+                        borderBottom: "1px solid grey",
+                        fontSize: "25px",
+                      }}
+                    >
+                      <h3>Checkout </h3>
                     </div>
-                    <div className="Details mx-5">
-                      <h6
-                        style={{
-                          textTransform: "uppercase",
-                          color: "blue",
-                          letterSpacing: "3px",
-                        }}
-                      >
-                        {elm.roomtype}
-                      </h6>
 
-                      <div
-                        className="locationtrip my-3"
-                        style={{ display: "flex", gap: "10px" }}
-                      >
-                        <i className="fa-solid fa-location-dot" />
-                        <span>{elm.place}</span>
+                    <div
+                      className="cartDetails my-4 d-flex"
+                      style={{ paddingTop: "5px" }}
+                    >
+                      <div className="Images">
+                        <img
+                          src={`${API_3}${elm.img.replace("public", "")}`}
+                          alt="sklfjls"
+                          style={{ width: "150px", height: "150px" }}
+                        ></img>
                       </div>
+                      <div className="Details mx-5">
+                        <h6
+                          style={{
+                            textTransform: "uppercase",
+                            color: "blue",
+                            letterSpacing: "3px",
+                          }}
+                        >
+                          {elm.roomtype}
+                        </h6>
 
-                      {/* <div className="tourtype">
+                        <div
+                          className="locationtrip my-3"
+                          style={{ display: "flex", gap: "10px" }}
+                        >
+                          <i className="fa-solid fa-location-dot" />
+                          <span>{elm.place}</span>
+                        </div>
+
+                        {/* <div className="tourtype">
                             <p>Type Tour : Daliy Tour</p> 
                             </div> */}
 
-                      <div className="departurDate">
-                        <p>
-                          Checkin : <span>{elm.startDate}</span>
-                        </p>
-                      </div>
+                        <div className="departurDate">
+                          <p>
+                            Checkin : <span>{elm.startDate}</span>
+                          </p>
+                        </div>
 
-                      <div className="Duration">
-                        <p>Checkout : {elm.endDate}</p>
-                      </div>
+                        <div className="Duration">
+                          <p>Checkout : {elm.endDate}</p>
+                        </div>
 
-                      <div className="numberofdaysss">
-                        {diff} Days to Stay = {elm.dayCount} x{" "}
-                        {elm.perRoomPrice} = {elm.dayCount * elm.perRoomPrice}
-                      </div>
+                        <div className="numberofdaysss">
+                          {diff} Days to Stay = {elm.dayCount} x{" "}
+                          {elm.perRoomPrice} = {elm.dayCount * elm.perRoomPrice}
+                        </div>
 
-                      <div className="bookingDetails my-3">
-                        <p>Adult : 2 </p>
-                        <p>Children : 1</p>
-                        <p
-                          style={{
-                            display: elm.type === "Rooms" ? "" : "none",
-                          }}
-                        >
-                          Rooms :{elm.roomCount}
-                        </p>
-                        {/* <p>
+                        <div className="bookingDetails my-3">
+                          {/* <p>Adult : 2 </p>
+                          <p>Children : 1</p> */}
+                          <p>Guests: {bookingData.guestCount}</p>
+                          <p
+                            style={{
+                              display: elm.type === "Rooms" ? "" : "none",
+                            }}
+                          >
+                            Rooms :{elm.roomCount}
+                          </p>
+                          {/* <p>
                           Number of Room : {room} = {room} x {diff * elm.price}{" "}
                           = {room * diff * elm.price}
                         </p> */}
-                        <div className="total">
-                          Total amount : ₹{" "}
-                          {elm.dayCount * elm.perRoomPrice * elm.roomCount}
+                          <div className="total ">
+                            Total amount : ₹{" "}
+                            {elm.dayCount * elm.perRoomPrice * elm.roomCount}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div
-                      className="Pricesss "
-                      style={{ fontSize: "25px", marginLeft: "45px" }}
-                    >
-                      {elm.price}
+                      <div
+                        className="Pricesss "
+                        style={{ fontSize: "25px", marginLeft: "45px" }}
+                      >
+                        {elm.price}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="col-md-4 mx-5">
-                  <div className="carttotal">
-                    <h3>Cart totals</h3>
-                  </div>
+                  <div className="col-md-4" style={{ marginTop: "6px" }}>
+                    <div className="carttotal">
+                      <h3>Checkout totals</h3>
+                    </div>
 
-                  <div
-                    className="cardtotalbox p-3"
-                    style={{ border: "1px solid grey" }}
-                  >
                     <div
-                      className="box3"
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                      }}
+                      className="cardtotalbox p-3"
+                      style={{ border: "1px solid grey" }}
                     >
-                      <div className="d-flex justify-content-between my-3">
-                        <span>Subtotal</span>
-                        <span>
-                          ₹ {elm.dayCount * elm.perRoomPrice * elm.roomCount}
-                        </span>
-                      </div>
+                      <div
+                        className="box3"
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          // background:"black",
+                        }}
+                      >
+                        <div className="d-flex justify-content-between  my-3">
+                          <span>Subtotal</span>
+                          <span>
+                            ₹ {elm.dayCount * elm.perRoomPrice * elm.roomCount}
+                          </span>
+                        </div>
 
-                      <div className="d-flex justify-content-between">
-                        <span>Total</span>
-                        <span>
-                          ₹ {elm.dayCount * elm.perRoomPrice * elm.roomCount}
-                        </span>
-                      </div>
-
-                      <center>
-                        <button
-                          className="btn btn-primary my-3"
-                          onClick={showsss}
+                        <div
+                          className="d-flex justify-content-between"
+                          style={{ marginBottom: "10px" }}
                         >
-                          Proceed to checkout
-                        </button>
-                      </center>
+                          <span>Total</span>
+                          <span>
+                            ₹ {elm.dayCount * elm.perRoomPrice * elm.roomCount}
+                          </span>
+                        </div>
+
+                        <center>
+                          <button
+                            className="btn  my-2 "
+                            style={{ background: "#67c7b9" }}
+                            onClick={showsss}
+                          >
+                            Proceed to checkout
+                          </button>
+                        </center>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-      </div>
+              );
+            })}
+        </div>
 
-      <div className="showsss" id="form-container">
-        <div className="inner-div">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              checkout(amount);
-            }}
-          >
-            <div class="form-group">
-              <h2 class="heading">Fill Your Details</h2>
-              <div class="controls">
-                <input
-                  type="text"
-                  placeholder="Name"
-                  value={clientName}
-                  required
-                  onChange={(e) => {
-                    setClientName(e.target.value);
-                  }}
-                  style={{}}
-                />
-              </div>
-              <div class="controls">
-                <input
-                  type="text"
-                  id="email"
-                  class="floatLabel"
-                  name="email"
-                  value={email}
-                  required
-                  placeholder="email"
-                  // onChange={(e) => {
-                  //   setEmail(e.target.value);
-                  // }}
-                  disabled
-                />
-                <label for="email"></label>
-              </div>
-              <div class="controls">
-                <input
-                  type="tel"
-                  id="phone"
-                  class="floatLabel"
-                  name="phone"
-                  value={phone}
-                  required
-                  placeholder="Phone"
-                  onChange={(e) => {
-                    setphone(e.target.value);
-                  }}
-                />
-                <label for="phone"></label>
-              </div>
-              <div class="grid">
-                <div class="col-2-3">
-                  <div class="controls">
-                    <input
-                      type="text"
-                      id="street"
-                      class="floatLabel"
-                      name="street"
-                      required
-                      value={add}
-                      placeholder="Adress"
-                      onChange={(e) => {
-                        setadd(e.target.value);
-                      }}
-                    />
-                    <label for="street"></label>
+        <div className="showsss" id="form-container">
+          <div className="inner-div">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                checkout(amount);
+              }}
+            >
+              <div class="form-group">
+                <h2 class="heading">Fill Your Details</h2>
+                <div className="formrow">
+                  <div className="coloumn">
+                    <div class="controls">
+                      <input
+                        type="text"
+                        placeholder="Name"
+                        value={clientName}
+                        required
+                        onChange={(e) => {
+                          setClientName(e.target.value);
+                        }}
+                        style={{}}
+                      />
+                    </div>
+                  </div>
+                  <div className="coloumn">
+                    <div class="controls">
+                      <input
+                        type="text"
+                        id="email"
+                        class="floatLabel"
+                        name="email"
+                        value={email}
+                        required
+                        placeholder="email"
+                        // onChange={(e) => {
+                        //   setEmail(e.target.value);
+                        // }}
+                        disabled
+                      />
+                      <label for="email"></label>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="grid">
-                {/* <div class="col-2-3">
+
+                <div
+                  class="grid "
+                  style={{ paddingLeft: "8px", paddingRight: "8px" }}
+                >
+                  <div class="col-2-3">
+                    <div class="controls">
+                      <input
+                        type="text"
+                        id="street"
+                        class="floatLabel"
+                        name="street"
+                        required
+                        value={add}
+                        placeholder="Adress"
+                        onChange={(e) => {
+                          setadd(e.target.value);
+                        }}
+                      />
+                      <label for="street"></label>
+                    </div>
+                  </div>
+                </div>
+                <div className="formrow">
+                  <div className="coloumn">
+                    <div class="controls">
+                      <input
+                        type="tel"
+                        id="phone"
+                        class="floatLabel"
+                        name="phone"
+                        value={phone}
+                        required
+                        placeholder="Phone"
+                        onChange={(e) => {
+                          setphone(e.target.value);
+                        }}
+                      />
+                      <label for="phone"></label>
+                    </div>
+                  </div>
+                  <div className="coloumn">
+                    <div class="col-1-3">
+                      <div class="controls">
+                        <input
+                          type="text"
+                          id="post-code"
+                          class="floatLabel"
+                          name="post-code"
+                          required
+                          value={pin}
+                          placeholder="Pin-code"
+                          onChange={(e) => {
+                            setpin(e.target.value);
+                          }}
+                        />
+                        <label for="post-code"></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="grid">
+                  {/* <div class="col-2-3">
           <div class="controls">
             <input type="text" id="city" class="floatLabel" name="city" placeholder='City' />
             <label for="city"></label>
           </div>         
         </div> */}
-                <div class="col-1-3">
-                  <div class="controls">
-                    <input
-                      type="text"
-                      id="post-code"
-                      class="floatLabel"
-                      name="post-code"
-                      required
-                      value={pin}
-                      placeholder="Pin-code"
-                      onChange={(e) => {
-                        setpin(e.target.value);
-                      }}
-                    />
-                    <label for="post-code"></label>
-                  </div>
+                </div>
+
+                <div
+                  class="controls"
+                  style={{ paddingLeft: "8px", paddingRight: "8px" }}
+                >
+                  <input
+                    type="text"
+                    id="country"
+                    class="floatLabel"
+                    name="country"
+                    placeholder="Country"
+                    required
+                    value={country}
+                    onChange={(e) => {
+                      setcountry(e.target.value);
+                    }}
+                  />
+                  <label for="country"></label>
                 </div>
               </div>
-              <div class="controls">
-                <input
-                  type="text"
-                  id="country"
-                  class="floatLabel"
-                  name="country"
-                  placeholder="Country"
-                  required
-                  value={country}
-                  onChange={(e) => {
-                    setcountry(e.target.value);
-                  }}
-                />
-                <label for="country"></label>
+
+              <div
+                className="d-flex"
+                style={{
+                  width: "100%",
+                  gap: "40px",
+                  padding: "8px",
+                  justifyContent: "center",
+                }}
+              >
+                <button
+                  type="submit"
+                  value="Submit"
+                  class="col-1-4 w-100"
+                  style={{ background: "#67c7b9" }}
+                >
+                  Submit
+                </button>
+                <button
+                  class="col-1-4 w-100 closebtn"
+                  style={{ background: "red" }}
+                  onClick={closeee}
+                >
+                  Cancel
+                </button>
               </div>
-            </div>
-            <div className="d-flex" style={{ width: "30%", gap: "20px" }}>
-              <button
-                type="submit"
-                value="Submit"
-                class="col-1-4 w-100"
-                style={{ background: "#67c7b9" }}
-              >
-                Submit
-              </button>
-              <button
-                class="col-1-4 w-100 closebtn"
-                style={{ background: "red" }}
-                onClick={closeee}
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
     </>
-    
   );
 }
