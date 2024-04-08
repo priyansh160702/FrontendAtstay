@@ -7,11 +7,12 @@ import Loader from "../components/Loader";
 import Navbar from "../components/Navbar";
 import ListingCard from "../components/ListingCard";
 import Footer from "../components/Footer";
-import { API_21 } from "../api/api";
+import { API_21, API_3 } from "../api/api";
+import axios from "axios";
 
 const SearchPage = () => {
   const [loading, setLoading] = useState(true);
-  const { search } = useParams();
+  const { search, checkIn, checkOut, guest } = useParams();
   const listings = useSelector((state) => state.listings);
 
   const dispatch = useDispatch();
@@ -30,9 +31,27 @@ const SearchPage = () => {
     }
   };
 
+  const tempFunc = async () => {
+    try {
+      console.log(search, checkIn, checkOut, guest);
+      const response = await axios.post(`${API_3}api/searchPage`, {
+        search,
+        checkIn,
+        checkOut,
+        guest,
+      });
+      dispatch(setListings({ listings: response.data.result }));
+      console.log(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    getSearchListings();
-  }, [search]);
+    // getSearchListings();
+    tempFunc();
+  }, [search, checkIn, checkOut, guest]);
 
   return loading ? (
     <Loader />
@@ -44,6 +63,7 @@ const SearchPage = () => {
         {listings?.map(
           ({
             _id,
+            hostId,
             creator,
             listingPhotoPaths,
             city,
@@ -54,10 +74,11 @@ const SearchPage = () => {
             price,
             booking = false,
             hotelId,
+            rooms,
           }) => (
             <ListingCard
               listingId={hotelId}
-              creator={creator}
+              creator={hostId}
               listingPhotoPaths={listingPhotoPaths}
               city={city}
               province={province}
@@ -66,6 +87,7 @@ const SearchPage = () => {
               type={type}
               price={price}
               booking={booking}
+              rooms={rooms}
             />
           )
         )}

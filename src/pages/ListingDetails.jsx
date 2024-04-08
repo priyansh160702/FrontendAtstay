@@ -10,8 +10,9 @@ import Loader from "../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Footer from "../components/Footer";
+import ImageZoomPopup from "../components/ImageZoomPopup";
 import { API_10, API_11, API_3, API_9 } from "../api/api";
-import { setBookingData, setTempHostData } from "../redux/state";
+import { setBookingData, setImagePopup, setTempHostData } from "../redux/state";
 
 const ListingDetails = () => {
   const [loading, setLoading] = useState(true);
@@ -23,12 +24,19 @@ const ListingDetails = () => {
   const [datesArray, setDatesArray] = useState([]);
   const [availability, setAvailability] = useState("");
   const [roomCount, setRoomCount] = useState(1);
+  const [guestCounter, setGuestCounter] = useState(1);
   const [roomCountErr, setRoomCountErr] = useState();
   const [dayCountErr, setDayCountErr] = useState();
   const [image, setImage] = useState();
-  // const [date,setDate]=useState([])
+  const [imageArr, setImageArr] = useState([]);
+  const [imageIndex, setImageIndex] = useState(0);
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (listing) {
+      setImageArr(listing.listingPhotoPaths);
+    }
+  }, [listing]);
 
   const { listingId } = useParams();
   const getHostInfo = async () => {
@@ -66,56 +74,11 @@ const ListingDetails = () => {
       console.log("Fetch Listing Details Failed", err.message);
     }
   };
-  console.log("listing details ", listing);
+  // console.log("listing details ", listing);
 
   useEffect(() => {
     getListingDetails();
   }, []);
-
-  // console.log(listing);
-
-  // const handleAvailability = async () => {
-  //   try {
-  //     if (datesArray) {
-  //       if (listing?.type === "An entire place") {
-  //         const resp = await axios.post(API_10, {
-  //           date: datesArray,
-  //           type: "An entire place",
-  //           hotelId: "2bmiyu1e0slsylsju",
-  //         });
-  //         // console.log("resp", resp?.data);
-  //         if (resp?.data.code == 2) {
-  //           // console.log(resp?.data);
-  //           // console.log("inside availability not found");
-  //           setAvailability("Not Available");
-  //         }
-  //         if (resp?.data?.availability[0].bookingStatus === false) {
-  //           setAvailability("Available");
-  //         } else if (resp?.data?.availability[0].bookingStatus) {
-  //           setAvailability("Not Available");
-  //         }
-
-  //         // console.log("Response", listing);
-  //       } else if (listing?.type === "Rooms") {
-  //         const response = await axios.post(API_10, {
-  //           date: datesArray,
-  //           type: "Rooms",
-  //           hotelId: "2bmiyu1e0slsylsj0u",
-  //           roomType: "Standard",
-  //           roomNum: 6,
-  //         });
-  //         if (response) {
-  //           console.log(response);
-  //         }
-  //       }
-  //     } else {
-  //       window.alert("please select date range");
-  //     }
-  //     // console.log("listing", listing);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   /* BOOKING CALENDAR */
   const [dateRange, setDateRange] = useState([
@@ -141,7 +104,7 @@ const ListingDetails = () => {
 
   const navigate = useNavigate();
 
-const currentDate = new Date();
+  const currentDate = new Date();
 
   useEffect(() => {
     if (roomCount < 1) {
@@ -156,23 +119,16 @@ const currentDate = new Date();
       setDayCountErr(null);
       setAvailability("null");
     }
-    if(currentDate < start){
+    if (currentDate < start) {
       if (roomCount > 0 && dayCount > 0) {
         checkAvailability();
         setDayCountErr(null);
       }
       // console.log("start :",start," \n currentDate : ",currentDate)
-    }else{
+    } else {
       setDayCountErr("Please Select proper date range");
     }
-   
   }, [roomCount, dayCount, datesArray, selectRoom]);
-  // useEffect(() => {
-  //   console.log("roomCount", roomCount);
-  //   if (roomCount > 0 && dayCount > 0) {
-  //     checkAvailability();
-  //   }
-  // }, [roomCount, dayCount, datesArray, selectRoom]);
 
   const checkAvailability = async () => {
     try {
@@ -254,6 +210,7 @@ const currentDate = new Date();
           listing: listing,
           dates: { startDate, endDate },
           datesArray: datesArray,
+          guestCount: guestCounter,
         };
         console.log("dayCount", dayCount);
         console.log("handleSubmit button clicked", bookingForm);
@@ -283,6 +240,19 @@ const currentDate = new Date();
   };
 
   useEffect(() => {
+    dispatch(setImagePopup({ show: false }));
+    console.log("use Effect is running");
+  }, []);
+
+  const handleZoom = (index) => {
+    dispatch(setImagePopup({ show: true }));
+    if (listing.listingPhotoPaths) {
+      setImageArr(listing.listingPhotoPaths);
+    }
+    setImageIndex(index);
+  };
+
+  useEffect(() => {
     // console.log("listing", listing.rooms[0].price);
     if (listing) {
       if (listing.type === "Rooms") {
@@ -306,6 +276,7 @@ const currentDate = new Date();
     <Loader />
   ) : (
     <>
+      <ImageZoomPopup imageArr={imageArr} imageIndex={imageIndex} />
       <div className="listing-details">
         <div className="title">
           <h1>{listing && listing.title}</h1>
@@ -318,21 +289,23 @@ const currentDate = new Date();
                 "public",
                 ""
               )}`}
+              onClick={() => handleZoom(0)}
             />
           </div>
-
           <div className="innerimage">
             <img
               src={`${API_3}${listing.listingPhotoPaths[1].replace(
                 "public",
                 ""
               )}`}
+              onClick={() => handleZoom(1)}
             />
             <img
               src={`${API_3}${listing.listingPhotoPaths[2].replace(
                 "public",
                 ""
               )}`}
+              onClick={() => handleZoom(2)}
             />
           </div>
 
@@ -342,20 +315,16 @@ const currentDate = new Date();
                 "public",
                 ""
               )}`}
+              onClick={() => handleZoom(3)}
             />
             <img
               src={`${API_3}${listing.listingPhotoPaths[4].replace(
                 "public",
                 ""
               )}`}
+              onClick={() => handleZoom(4)}
             />
           </div>
-          {/* {listing.listingPhotoPaths?.map((item) => (
-            <img
-              src={`${API_3}${item.replace("public", "")}`}
-              alt="listing photo"
-            />
-          ))} */}
         </div>
 
         <div className="mob-img-container" id="mob">
@@ -367,6 +336,7 @@ const currentDate = new Date();
               }
               alt=""
               srcset=""
+              onClick={() => handleZoom(0)}
             />
           </div>
           <div className="short-img-container">
@@ -382,23 +352,14 @@ const currentDate = new Date();
                   src={`${API_3}${item.replace("public", "")}`}
                   alt=""
                   srcset=""
+                  onClick={() => handleZoom(id)}
                 />
               </div>
             ))}
           </div>
         </div>
-        {/* <div className="photos" >
-          {listing.listingPhotoPaths?.map((item) => (
-            <img
-              src={`${API_3}${item.replace("public", "")}`}
-              alt="listing photo"
-            />
-          ))}
-        </div> */}
-        <div
-          className="details"
-          style={{ display: "flex", gap: "50px", flexWrap: "wrap" }}
-        >
+
+        <div className="details">
           <div className="property-details">
             <h2>
               {listing.type} in {listing.city}, {listing.province},{" "}
@@ -445,14 +406,14 @@ const currentDate = new Date();
                             ?.icon
                         }
                       </div>
-                      <p>{item}</p>
+                      <p id="booking-box">{item}</p>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
           </div>
-          <div>
+          <div className="date-box-container">
             <h2>How long do you want to stay?</h2>
             <div className="date-range-calendar">
               <DateRange ranges={dateRange} onChange={handleSelect} />
@@ -535,6 +496,32 @@ const currentDate = new Date();
                     </div>
                   </div>
                 </div>
+                <div className="rooms-count">
+                  <div className="text">Guests</div>
+                  <div className="value">
+                    <div
+                      className="decrement"
+                      onClick={() => {
+                        if (parseInt(guestCounter) > 1) {
+                          setGuestCounter(parseInt(guestCounter) - 1);
+                        }
+                      }}
+                    >
+                      -
+                    </div>
+                    <div className="input">{guestCounter}</div>
+                    <div
+                      className="increment"
+                      onClick={() => {
+                        if (parseInt(guestCounter) < listing.guestCount) {
+                          setGuestCounter(parseInt(guestCounter) + 1);
+                        }
+                      }}
+                    >
+                      +
+                    </div>
+                  </div>
+                </div>
                 <div className="error-container">
                   {roomCountErr && (
                     <p style={{ color: "red" }}>{roomCountErr}</p>
@@ -567,13 +554,21 @@ const currentDate = new Date();
                 onClick={handleSubmit}
                 disabled={!(availability === "Available")}
                 style={{
-                  background: availability === "Available" ? "red" : "grey",
+                  background: availability === "Available" ? "#F8395A" : "grey",
                 }}
               >
                 BOOKING
               </button>
             </div>
           </div>
+        </div>
+        <div className="stickyBookNow">
+          <p>Total price: Rs. {price * dayCount * roomCount}</p>
+          <a href="#booking-box">
+            <button className="mobileBookNow" onClick={() => {}}>
+              Book Now
+            </button>
+          </a>
         </div>
       </div>
 

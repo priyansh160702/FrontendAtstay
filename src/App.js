@@ -22,6 +22,7 @@ import { useState } from "react";
 import EditListing from "./pages/EditListing";
 import CreateAvailability from "./pages/availability/CreateAvailability";
 import EditAvailability from "./pages/availability/EditAvailability";
+import PrivacyPolicy from "./pages/PrivacyPolicies";
 
 function App() {
   const [dropdownMenu, setDropdownMenu] = useState(false);
@@ -42,7 +43,7 @@ function App() {
             path="/properties/category/:category"
             element={<CategoryPage />}
           />
-          <Route path="/properties/search/:search" element={<SearchPage />} />
+          <Route path="/properties/search/:search/:checkIn/:checkOut/:guest" element={<SearchPage />} />
           <Route path="/:userId/trips" element={<TripList />} />
           <Route path="/:userId/wishList" element={<WishList />} />
           <Route path="/:userId/properties" element={<PropertyList />} />
@@ -57,6 +58,9 @@ function App() {
             element={<EditAvailability />}
           />
           <Route path="/create-availability" element={<CreateAvailability />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+
+
         </Routes>
       </BrowserRouter>
     </div>

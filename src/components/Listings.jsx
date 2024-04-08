@@ -28,7 +28,7 @@ const Listings = () => {
       );
 
       const data = await response.json();
-      // console.log("listingData", data);
+      console.log("listingData", data);
       dispatch(setListings({ listings: data }));
       setLoading(false);
     } catch (err) {
@@ -63,7 +63,7 @@ const Listings = () => {
         <Loader />
       ) : (
         <div className="listings">
-          {listings.map(
+          {listings.length>0? listings.map(
             ({
               _id,
               hotelId,
@@ -93,7 +93,19 @@ const Listings = () => {
                 rooms={rooms}
               />
             )
-          )}
+          ):( <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+            }}
+          >
+            <h2>Coming Soon..........</h2>
+            <h4 >
+              connect with us: <br></br> Phone No.: 8077412283 <br></br> Email:
+              atstaytravel@gmail.com
+            </h4>
+          </div>)}
         </div>
       )}
       {/* <div className="category-list">
