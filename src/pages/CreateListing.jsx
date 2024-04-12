@@ -213,7 +213,9 @@ const CreateListing = () => {
           body: listingForm,
         });
         console.log(response);
+
         if (response.ok) {
+          window.alert("Congratulations your property is sent for verifcation")
           navigate("/");
         }
       }
@@ -569,7 +571,7 @@ const CreateListing = () => {
 
             <h3>What make your place attractive and exciting?</h3>
             <div className="description">
-              <p>Title</p>
+              <p>Property Name</p>
               <input
                 type="text"
                 placeholder="Title"
@@ -578,7 +580,7 @@ const CreateListing = () => {
                 onChange={handleChangeDescription}
                 required
               />
-              <p>Description</p>
+              <p>Property Description</p>
               <textarea
                 type="text"
                 placeholder="Description"
@@ -588,7 +590,7 @@ const CreateListing = () => {
                 required
                 style={{ resize: "none" }}
               />
-              <p>Highlight</p>
+              <p>What is Special about your Property?</p>
               <input
                 type="text"
                 placeholder="Highlight"
@@ -597,7 +599,7 @@ const CreateListing = () => {
                 onChange={handleChangeDescription}
                 required
               />
-              <p>Highlight details</p>
+              <p> Few details about your speciality</p>
               <textarea
                 type="text"
                 placeholder="Highlight details"

@@ -11,7 +11,7 @@ import { BiTrash } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
-import { API_25, API_4, API_9 } from "../api/api";
+import { API_25, API_4, API_9, API_3 } from "../api/api";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
@@ -81,9 +81,9 @@ const EditListing = () => {
         highlightDesc: listing.highlightDesc,
         price: listing.price,
       });
-      setStandardRoom(listing.rooms[0].price);
-      setDoubleRoom(listing.rooms[1].price);
-      setDeluxeRoom(listing.rooms[2].price);
+      setStandardRoom(listing.rooms[0]?.price || 0);
+      setDoubleRoom(listing.rooms[1]?.price || 0);
+      setDeluxeRoom(listing.rooms[2]?.price || 0);
     }
   }, [listing]);
   useEffect(() => {
@@ -286,6 +286,20 @@ const EditListing = () => {
     }
   };
 
+  const handleDelete = async () => {
+    const alert = window.confirm(
+      "Are you sure you want to delete this property"
+    );
+    if (alert) {
+      try {
+        const response = await axios.delete(`${API_3}properties/${listingId}`);
+        window.alert(response.data.msg);
+        navigate(`/${listing.hostId}/properties`);
+      } catch (error) {
+        console.log("Error Occured", error);
+      }
+    }
+  };
   return (
     <>
       <div className="create-listing">
@@ -633,7 +647,7 @@ const EditListing = () => {
 
             <h3>What make your place attractive and exciting?</h3>
             <div className="description">
-              <p>Title</p>
+              <p>Property Name</p>
               <input
                 type="text"
                 placeholder="Title"
@@ -642,7 +656,7 @@ const EditListing = () => {
                 onChange={handleChangeDescription}
                 required
               />
-              <p>Description</p>
+              <p>Property Description</p>
               <textarea
                 type="text"
                 placeholder="Description"
@@ -652,7 +666,7 @@ const EditListing = () => {
                 required
                 style={{ resize: "none" }}
               />
-              <p>Highlight</p>
+              <p>What is Special about your Property?</p>
               <input
                 type="text"
                 placeholder="Highlight"
@@ -661,7 +675,7 @@ const EditListing = () => {
                 onChange={handleChangeDescription}
                 required
               />
-              <p>Highlight details</p>
+              <p>Few details about your speciality</p>
               <textarea
                 type="text"
                 placeholder="Highlight details"
@@ -706,7 +720,7 @@ const EditListing = () => {
                       />
                     </div>
                     <div className="rooms">
-                      <label htmlFor="deluxe">Delux</label>
+                      <label htmlFor="deluxe">Deluxe</label>
                       <input
                         type="number"
                         placeholder="Enter per night price"
@@ -766,12 +780,21 @@ const EditListing = () => {
             </div>
           </div>
 
-          <button className="submit_btn" type="submit">
+          <button
+            className="submit_btn"
+            style={{ background:"#66cccc" }}
+            type="submit"
+          >
             UPDATE YOUR LISTING
+          </button>
+          <button
+            className="submit_btn"
+            onClick={() => handleDelete()}
+          >
+            DELETE YOUR LISTING
           </button>
         </form>
       </div>
-
       <Footer />
     </>
   );

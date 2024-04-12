@@ -87,8 +87,6 @@ function Invoice() {
         >
           <img
             src="/assets/logo.webp"
-            // src={`${API_3}assets/logo.webp`}
-            // src="https://atstay.in/static/media/atstaylogo.906f76c7ef404c420b3b.webp"
             height="80px"
             width="80px"
             style={{ textAlign: "left" }}
@@ -127,8 +125,7 @@ function Invoice() {
               BILLED TO
               <br />
               {bookingData.clientName}
-              {/* <br /> */}
-              {/* IN19CCDPD5287P1ZY */}
+             
               <br />
               {bookingData.add + " " + bookingData.pin}
               <br />
@@ -283,8 +280,6 @@ function Invoice() {
           </tr>
         </table>
       </div>
-
-      {/* </div> */}
       <div
         className="button"
         style={{ justifyContent: "center", display: "flex" }}

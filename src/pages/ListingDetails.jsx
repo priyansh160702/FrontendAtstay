@@ -545,6 +545,7 @@ const ListingDetails = () => {
                 </div>
               </div>
               <h2>Total price: Rs. {price * dayCount * roomCount}</h2>
+              <p>*All taxes are included</p>
               <p>CheckIn Date: {dateRange[0].startDate.toDateString()}</p>
               <p>CheckOut Date: {dateRange[0].endDate.toDateString()}</p>
 
