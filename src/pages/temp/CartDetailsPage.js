@@ -94,8 +94,11 @@ export default function CartDetailsPage() {
   };
 
   const closeee = () => {
-    const show = document.querySelector(".showsss");
-    show.style.display = "none";
+    dispatch(setShowPopup({ popup: false }));
+    const show = document.querySelector(".inner-div");
+    // show.style.display = "none";
+    // show.style.backgroundColor = "none";
+    show.style.overflow = "auto";
   };
 
   const checkout = async (amount) => {

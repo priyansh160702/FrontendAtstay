@@ -64,6 +64,7 @@ const Navbar = ({ dropdownMenu, setDropdownMenu }) => {
                     setShowPopUp(false);
                   }}
                 >
+                helooo
                   search
                 </button>
               </div>
